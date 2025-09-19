@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build Next.js project
-        run: npm run build && npm run export
+        run: npm run build   # ✅ only build (out/ is auto-created)
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
@@ -31,4 +31,10 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out
-          server-dir: /public_html   # adjust this for your Hostinger root
+          server-dir: /public_html   # adjust to your Hostinger root
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/npm-debug.log
+            **/yarn-error.log
