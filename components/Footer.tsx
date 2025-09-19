@@ -1,10 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+} from "lucide-react";
 import Image from "next/image";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="panel-glass-alt border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -27,11 +37,12 @@ const Footer = () => {
             <Link href="/" className="flex items-center space-x-3 pb-6">
               {/* Logo image */}
               <Image
+                priority
+                draggable={false}
                 src="/logo.svg" // path from public folder
                 alt="Evo9 Labs Logo"
                 width={220} // adjust size as needed
                 height={80}
-                priority
               />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-md">
@@ -86,25 +97,25 @@ const Footer = () => {
                 </h3>
                 <div className="flex gap-4">
                   <Link
-                    href="https://github.com/"
+                    href="https://github.com/evo9labs"
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Github className="w-5 h-5" />
                   </Link>
                   <Link
-                    href="https://linkedin.com/"
+                    href="https://www.linkedin.com/in/evo-9-labs"
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Linkedin className="w-5 h-5" />
                   </Link>
                   <Link
-                    href="https://twitter.com/"
+                    href="https://www.instagram.com/evo9labs"
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
-                    <Twitter className="w-5 h-5" />
+                    <Instagram className="w-5 h-5" />
                   </Link>
                 </div>
               </div>
@@ -114,8 +125,8 @@ const Footer = () => {
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-muted-foreground">
           <p>
-            &copy; 2025 Evo9Labs. All rights reserved. Evolving the digital
-            future.
+            &copy; {currentYear} Evo9Labs. All rights reserved. Evolving the
+            digital future.
           </p>
         </div>
       </div>

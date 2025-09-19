@@ -33,12 +33,12 @@ const Navigation = () => {
           <Link href="/" className="flex items-center space-x-3">
             {/* Logo image */}
             <Image
+              priority // ensures fast loading
+              draggable={false}
               src="/logo.svg" // path from public folder
               alt="Evo9 Labs Logo"
               width={220} // adjust size as needed
               height={80}
-              // className="h-10 w-auto" // keep aspect ratio, set height
-              priority // ensures fast loading
             />
           </Link>
 

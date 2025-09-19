@@ -192,7 +192,7 @@ export const projects = [
     image: "/images/diabmart.webp",
     tags: ["E-commerce", "Marketplace", "Next.js", "Stripe", "MongoDB"],
     category: "E-commerce",
-    webLink: "",
+    webLink: "https://diabmart.com",
     isFeatured: true,
   },
   {
@@ -216,7 +216,7 @@ export const projects = [
     image: "/images/kolnet.webp",
     tags: ["Web3", "Wallet Connection", "DApp", "React", "Polygon"],
     category: "Blockchain",
-    webLink: "",
+    webLink: "https://kolnet.superstaking.io",
     isFeatured: true,
   },
 ];

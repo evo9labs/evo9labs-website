@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, CheckCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Contact() {
@@ -19,17 +19,17 @@ export default function Contact() {
   });
 
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true); // start loading
 
     try {
       const response = await fetch("/sendmail.php", {
         method: "POST",
-        body: new URLSearchParams(formData as any), // send as form-data
+        body: new URLSearchParams(formData as any),
       });
-
-      console.log("Response status:", response);
 
       if (response.ok) {
         toast({
@@ -50,6 +50,8 @@ export default function Contact() {
         description: "Please check your connection and try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false); // stop loading
     }
   };
 
@@ -206,9 +208,17 @@ export default function Contact() {
                 </div>
                 <Button
                   type="submit"
-                  className="btn-evolution w-full md:w-auto"
+                  className="btn-evolution w-full md:w-auto flex items-center justify-center"
+                  disabled={isLoading}
                 >
-                  Send Message
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </Button>
               </form>
             </div>

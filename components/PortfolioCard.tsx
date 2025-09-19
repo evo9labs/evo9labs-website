@@ -37,9 +37,10 @@ export default function ProjectCard({ project, isHomePage }: ProjectCardProps) {
           onClick={() => setIsOpen(true)} // open fullscreen
         >
           <Image
+            fill
+            draggable={false}
             src={project.image}
             alt={project.title}
-            fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
 
@@ -48,7 +49,10 @@ export default function ProjectCard({ project, isHomePage }: ProjectCardProps) {
             <>
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-4 left-4 right-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
-                <div className="flex justify-center">
+                <div
+                  className="flex justify-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <Link
                     href={project.webLink}
                     target="_blank"
@@ -104,29 +108,32 @@ export default function ProjectCard({ project, isHomePage }: ProjectCardProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsOpen(false)} // close when clicked
+            onClick={() => setIsOpen(false)} // close when clicking background
           >
+            {/* Close Button (always above) */}
+            <button
+              className="absolute top-6 right-6 z-50 p-2 rounded-full bg-white/80 text-black hover:bg-white transition"
+              onClick={() => setIsOpen(false)}
+            >
+              <X size={22} />
+            </button>
+
+            {/* Image Container */}
             <motion.div
-              className="relative max-w-5xl w-full h-[80vh]"
+              className="relative max-w-5xl w-full h-[80vh] z-40"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
             >
               <Image
+                fill
+                draggable={false}
                 src={project.image}
                 alt={project.title}
-                fill
                 className="object-contain rounded-lg"
               />
-
-              {/* Close Button */}
-              <button
-                className="absolute top-4 right-4 text-white hover:text-gray-300"
-                onClick={() => setIsOpen(false)}
-              >
-                <X size={28} />
-              </button>
             </motion.div>
           </motion.div>
         )}
