@@ -3,7 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main   # or master, whichever you deploy from
+      - main   # or master, whichever branch you deploy from
 
 jobs:
   build-and-deploy:
@@ -25,10 +25,10 @@ jobs:
         run: npm run build && npm run export
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@4.3.4
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out
-          server-dir: /public_html   # adjust to your Hostinger root
+          server-dir: /public_html   # adjust this for your Hostinger root
