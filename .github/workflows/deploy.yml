@@ -1,0 +1,44 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main   # or master, whichever branch you deploy from
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js project
+        run: npm run build   # ✅ only build (out/ is auto-created)
+
+      - name: List build output
+        run: ls -R ./out     # 👈 debug: confirm files exist before deploy
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/          # ✅ must end with /
+          server-dir: /public_html/  # ✅ keep trailing slash
+          dangerous-clean-slate: true   # 👈 ensures old files are deleted
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/npm-debug.log
+            **/yarn-error.log
