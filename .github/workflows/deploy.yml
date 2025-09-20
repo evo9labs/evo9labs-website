@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/          # ✅ must end with /
-          server-dir: ./  # ✅ keep trailing slash
+          server-dir: /  # ✅ keep trailing slash
           dangerous-clean-slate: true   # 👈 ensures old files are deleted
           exclude: |
             **/.git*
