@@ -3,7 +3,8 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main   # or master, whichever branch you deploy from
+      - main   # deploy automatically on push
+  workflow_dispatch:   # 👈 allows manual deploys from GitHub Actions UI
 
 jobs:
   build-and-deploy:
@@ -18,8 +19,19 @@ jobs:
         with:
           node-version: 18
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
+
+      - name: Disable Next.js telemetry
+        run: npx next telemetry disable
 
       - name: Build Next.js project
         run: npm run build   # ✅ only build (out/ is auto-created)
@@ -34,8 +46,8 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./out/          # ✅ must end with /
-          server-dir: /  # ✅ keep trailing slash
-          dangerous-clean-slate: true   # 👈 ensures old files are deleted
+          server-dir: /              # ✅ deploy directly to FTP root (public_html)
+          dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.github*
