@@ -3,11 +3,15 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main   # deploy automatically on push
-  workflow_dispatch:   # 👈 allows manual deploys from GitHub Actions UI
+      - main   # ✅ Auto deploy on push
+  workflow_dispatch:   # ✅ Allows manual deploys
 
 jobs:
-  build-and-deploy:
+  # --------------------------
+  # FAST DEPLOY (auto, incremental)
+  # --------------------------
+  fast-deploy:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -27,13 +31,53 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Cache Next.js build
+      - name: Install dependencies
+        run: npm install
+
+      - name: Disable Next.js telemetry
+        run: npx next telemetry disable
+
+      - name: Build Next.js project
+        run: npm run build
+
+      - name: Deploy via FTP (fast, incremental)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.github*
+            **/node_modules/**
+            **/npm-debug.log
+            **/yarn-error.log
+
+  # --------------------------
+  # CLEAN DEPLOY (manual, full reset)
+  # --------------------------
+  clean-deploy:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
         uses: actions/cache@v3
         with:
-          path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ github.sha }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
@@ -42,19 +86,16 @@ jobs:
         run: npx next telemetry disable
 
       - name: Build Next.js project
-        run: npm run build   # ✅ only build (out/ is auto-created)
+        run: npm run build
 
-      - name: List build output
-        run: ls -R ./out     # 👈 debug: confirm files exist before deploy
-
-      - name: Deploy via FTP
+      - name: Deploy via FTP (clean, slow)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./out/          # ✅ must end with /
-          server-dir: /              # ✅ deploy directly to FTP root (public_html)
+          local-dir: ./out/
+          server-dir: /
           dangerous-clean-slate: true
           exclude: |
             **/.git*
