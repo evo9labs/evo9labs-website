@@ -40,7 +40,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
             <span className="text-gradient">The 9 Dimensions of</span>
             <br />
-            <span className="text-foreground">Digital Evolutions bbbbb </span>
+            <span className="text-foreground">Digital Evolution</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
             We evolve your business digitally with complete end-to-end solutions
