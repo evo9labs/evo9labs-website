@@ -1,0 +1,12 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# If the request is for an existing file or folder, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Otherwise, serve index.html (Next.js static export fallback)
+RewriteRule ^ index.html [QSA,L]
+
+# Custom 404 page
+ErrorDocument 404 /404.html
