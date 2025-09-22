@@ -30,16 +30,28 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-6 ">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            {/* Logo image */}
+          {/* <Link href="/" className="flex items-center space-x-3">
             <Image
-              priority // ensures fast loading
+              priority 
               draggable={false}
-              src="/logo.svg" // path from public folder
+              src="/logo.svg" 
               alt="Evo9 Labs Logo"
-              width={220} // adjust size as needed
+              width={220} 
               height={80}
             />
+          </Link> */}
+
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-[200px] h-[30px]">
+              <Image
+                src="/logo.svg"
+                alt="Evo9 Labs Logo"
+                fill
+                priority
+                draggable={false}
+                className="object-contain"
+              />
+            </div>
           </Link>
 
           {/* Navigation Links */}
