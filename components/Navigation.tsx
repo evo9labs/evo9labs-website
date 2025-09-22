@@ -60,8 +60,10 @@ const Navigation = () => {
               <Link
                 key={item.path}
                 href={item.path}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.path) ? "text-primary" : "text-muted-foreground"
+                className={`text-sm font-medium transition-colors ${
+                  isActive(item.path)
+                    ? "text-white border-b-2 border-primary pb-1" // active link
+                    : "text-gray-300 hover:text-white" // default
                 }`}
               >
                 {item.name}
@@ -100,17 +102,18 @@ const Navigation = () => {
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                  className={`text-base font-medium transition-colors pl-3 ${
                     isActive(item.path)
-                      ? "text-primary"
-                      : "text-muted-foreground"
+                      ? "text-white border-l-4 border-primary" // active item
+                      : "text-gray-300 hover:text-white" // default
                   }`}
                 >
                   {item.name}
                 </Link>
               ))}
+
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <Button className="btn-evolution w-full">
+                <Button className="btn-evolution w-full mt-2">
                   Start Your Evolution
                 </Button>
               </Link>
