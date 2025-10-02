@@ -104,7 +104,7 @@ const Footer = () => {
                     <Github className="w-5 h-5" />
                   </Link>
                   <Link
-                    href="https://www.linkedin.com/in/evo-9-labs"
+                    href="https://www.linkedin.com/company/evo9labs"
                     target="_blank"
                     className="text-muted-foreground hover:text-primary transition-colors"
                   >
