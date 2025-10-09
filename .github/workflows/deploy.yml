@@ -3,8 +3,8 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - main   # ✅ Auto deploy on push
-  workflow_dispatch:   # ✅ Allows manual deploys
+      - main # ✅ Auto deploy on push
+  workflow_dispatch: # ✅ Allows manual deploys
 
 jobs:
   # --------------------------
@@ -39,6 +39,16 @@ jobs:
 
       - name: Build Next.js project
         run: npm run build
+
+      # ✅ Create .env file for PHPMailer before deploying
+      - name: Create .env for PHP
+        run: |
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" > ./out/.env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> ./out/.env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> ./out/.env
+          echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> ./out/.env
+          echo "SMTP_SECURE=${{ secrets.SMTP_SECURE }}" >> ./out/.env
+          echo "✅ .env file created"
 
       - name: Deploy via FTP (fast, incremental)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
@@ -87,6 +97,16 @@ jobs:
 
       - name: Build Next.js project
         run: npm run build
+
+      # ✅ Also create .env file for manual clean deploys
+      - name: Create .env for PHP
+        run: |
+          echo "SMTP_HOST=${{ secrets.SMTP_HOST }}" > ./out/.env
+          echo "SMTP_PORT=${{ secrets.SMTP_PORT }}" >> ./out/.env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> ./out/.env
+          echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> ./out/.env
+          echo "SMTP_SECURE=${{ secrets.SMTP_SECURE }}" >> ./out/.env
+          echo "✅ .env file created"
 
       - name: Deploy via FTP (clean, slow)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6
