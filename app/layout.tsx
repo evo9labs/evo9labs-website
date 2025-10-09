@@ -27,8 +27,6 @@ export const metadata: Metadata = {
   },
 };
 
-const queryClient = new QueryClient();
-
 function ClientWrapper({ children }: { children: React.ReactNode }) {
   return (
     <TooltipProvider>
