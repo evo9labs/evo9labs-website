@@ -15,6 +15,7 @@ import Image from "next/image";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  //test
   return (
     <footer className="panel-glass-alt border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-12">
