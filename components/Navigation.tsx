@@ -29,25 +29,45 @@ const Navigation = () => {
     <nav className="fixed top-0 w-full z-50 panel-glass border-b border-white/10 py-3 bg-black/90">
       <div className="max-w-7xl mx-auto px-6 ">
         <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-3">
+            <Image
+              priority
+              draggable={false}
+              src="/logo.webp"
+              alt="Evo9 Labs Logo"
+              width={220}
+              height={80}
+            />
+          </Link>
+
           {/* <Link href="/" className="flex items-center space-x-3">
             <div className="relative w-[200px] h-[30px]">
-              
-              <img
-                src="/logo.svg"
+              <Image
+                src="/logo.webp"
                 alt="Evo9 Labs Logo"
-                draggable="false"
-                className="h-8 w-auto"
+                fill
+                priority
+                draggable={false}
+                className="object-contain"
               />
             </div>
           </Link> */}
-          <Link href="/" className="flex items-center space-x-3">
-            <img
-              src="/logo.svg"
-              alt="Evo9 Labs Logo"
-              draggable="false"
-              className="h-[30px] w-auto block"
-            />
-          </Link>
+
+          {/* <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-[200px] h-[30px]">
+              <img
+                src="/logo.webp"
+                alt="Evo9 Labs Logo"
+                width="200"
+                height="50"
+                loading="eager"
+                decoding="async"
+                draggable="false"
+                className="h-auto w-[200px] select-none"
+              />
+            </div>
+          </Link> */}
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
