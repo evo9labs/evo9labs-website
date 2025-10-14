@@ -29,16 +29,9 @@ const Navigation = () => {
     <nav className="fixed top-0 w-full z-50 panel-glass border-b border-white/10 py-3 bg-black/90">
       <div className="max-w-7xl mx-auto px-6 ">
         <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3">
+          {/* <Link href="/" className="flex items-center space-x-3">
             <div className="relative w-[200px] h-[30px]">
-              {/* <Image
-                src="/logo.svg"
-                alt="Evo9 Labs Logo"
-                fill
-                priority
-                draggable={false}
-                className="object-contain"
-              /> */}
+              
               <img
                 src="/logo.svg"
                 alt="Evo9 Labs Logo"
@@ -46,6 +39,14 @@ const Navigation = () => {
                 className="h-8 w-auto"
               />
             </div>
+          </Link> */}
+          <Link href="/" className="flex items-center space-x-3">
+            <img
+              src="/logo.svg"
+              alt="Evo9 Labs Logo"
+              draggable="false"
+              className="h-[30px] w-auto block"
+            />
           </Link>
 
           {/* Navigation Links */}
