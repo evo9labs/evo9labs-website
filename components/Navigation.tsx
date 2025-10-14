@@ -30,7 +30,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-6 ">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
+          {/* <Link href="/" className="flex items-center space-x-3">
             <Image
               priority
               draggable={false}
@@ -39,10 +39,10 @@ const Navigation = () => {
               width={220}
               height={80}
             />
-          </Link>
+          </Link> */}
 
-          {/* <Link href="/" className="flex items-center space-x-3">
-            <div className="relative w-[200px] h-[30px]">
+          <Link href="/" className="flex items-center space-x-3">
+            <div className="relative w-[260px] h-[40px]">
               <Image
                 src="/logo.webp"
                 alt="Evo9 Labs Logo"
@@ -52,7 +52,7 @@ const Navigation = () => {
                 className="object-contain"
               />
             </div>
-          </Link> */}
+          </Link>
 
           {/* <Link href="/" className="flex items-center space-x-3">
             <div className="relative w-[200px] h-[30px]">
