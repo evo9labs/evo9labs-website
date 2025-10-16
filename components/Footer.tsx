@@ -40,10 +40,10 @@ const Footer = () => {
               <Image
                 priority
                 draggable={false}
-                src="/logo.svg" // path from public folder
+                src="/logo.webp" // path from public folder
                 alt="Evo9 Labs Logo"
-                width={220} // adjust size as needed
-                height={80}
+                width={180} // adjust size as needed
+                height={59}
               />
             </Link>
             <p className="text-muted-foreground mb-6 max-w-md">
