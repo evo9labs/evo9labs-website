@@ -68,7 +68,7 @@ export default function Contact() {
     {
       icon: <Mail className="w-6 h-6 text-primary" />,
       title: "Email",
-      value: "support@evo9labs.com",
+      value: "info@evo9labs.com",
       description: "Send us an email anytime",
     },
     // {
