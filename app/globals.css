@@ -2,54 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Evo9 Labs Design System - The 9 Dimensions of Digital Evolution */
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
 
 @layer base {
   :root {
-    /* Evo9 Labs Brand Colors - All HSL format */
-    --background: 220 25% 6%;  /* #0b0f19 - Deep navy/black */
-    --foreground: 210 22% 90%; /* #e6edf3 - Clean white text */
-    
-    --card: 220 25% 8%;        /* Slightly lighter than background */
-    --card-foreground: 210 22% 90%;
-    --card-panel: 220 25% 9%;  /* rgba(13,17,23,.55) equivalent */
-    --card-panel-alt: 220 25% 10%; /* rgba(13,17,23,.72) equivalent */
-    
-    --popover: 220 25% 8%;
-    --popover-foreground: 210 22% 90%;
-    
-    --primary: 210 22% 90%;    /* Clean white for buttons */
-    --primary-foreground: 220 25% 6%;
-    
-    --secondary: 159 100% 50%;  /* #00ffa2 - Green accent */
-    --secondary-foreground: 220 25% 6%;
-    
-    --muted: 215 16% 63%;      /* #94a3b8 - Muted text */
-    --muted-foreground: 215 16% 45%;
-    
-    --accent: 210 22% 90%;     /* Clean white accent */
-    --accent-foreground: 220 25% 6%;
-    
+    --background: 0 0% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 70% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 270 70% 65%;
+    --accent-foreground: 0 0% 100%;
+
     --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    
-    --border: 220 25% 15%;
-    --input: 220 25% 12%;
-    --ring: 210 22% 90%;       /* White focus ring */
-    
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 199 89% 48%;
+
     --radius: 0.75rem;
-    
-    /* Custom Evo9 specific tokens */
-    --hero-glow: 210 22% 90%;
-    --panel-glass: 220 25% 9%;
-    --text-gradient: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--accent)));
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(199 89% 48%),
+      hsl(270 70% 65%)
+    );
+    --gradient-glow: linear-gradient(
+      135deg,
+      hsl(199 89% 48% / 0.2),
+      hsl(270 70% 65% / 0.2)
+    );
+
+    --shadow-glow-blue: 0 0 40px hsl(199 89% 48% / 0.3);
+    --shadow-glow-purple: 0 0 40px hsl(270 70% 65% / 0.3);
+    --shadow-elegant: 0 10px 40px -10px hsl(0 0% 0% / 0.5);
+
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-spring: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    
-    /* Animation tokens */
-    --glow-primary: 210 22% 90%;
-    --shadow-glow: 0 0 20px hsl(var(--primary) / 0.4);
-    --shadow-glow-hover: 0 0 30px hsl(var(--primary) / 0.6);
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .gradient-border {
+    @apply relative before:absolute before:inset-0 before:rounded-[inherit] before:p-[1px] before:bg-gradient-to-r before:from-primary before:to-secondary before:-z-10;
+  }
+
+  .glow-effect {
+    @apply shadow-[0_0_40px_rgba(14,165,233,0.3)];
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .ambient-light {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.15;
+    pointer-events: none;
+    animation: ambient-pulse 8s ease-in-out infinite;
+  }
+
+  .card {
+    background: rgba(13, 17, 23, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: var(--transition-smooth);
+  }
+
+  @keyframes ambient-pulse {
+    0%,
+    100% {
+      opacity: 0.15;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.25;
+      transform: scale(1.1);
+    }
   }
 }
 
@@ -58,94 +120,40 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background: hsl(var(--background));
-  }
-  
   html {
     scroll-behavior: smooth;
   }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-@layer components {
-  /* Evo9 Custom Components */
-  .panel-glass {
-    background: rgba(13, 17, 23, 0.55);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+/* Scroll reveal animations */
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
   }
-  
-  .panel-glass-alt {
-    background: rgba(13, 17, 23, 0.72);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .text-gradient {
-    background: linear-gradient(135deg, hsl(var(--foreground)), hsl(var(--accent)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .btn-evolution {
-    background: hsl(var(--primary));
-    color: hsl(var(--background));
-    transition: var(--transition-smooth);
-    font-weight: 600;
-    border-radius: var(--radius);
-    padding: 0.75rem 2rem;
-    border: 1px solid hsl(var(--primary));
-    position: relative;
-    overflow: hidden;
-    animation: pulse-glow 2s infinite;
-  }
-  
-  .btn-evolution::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-  }
-  
-  .btn-evolution:hover::before {
-    left: 100%;
-  }
-  
-  .btn-evolution:hover {
-    background: hsl(var(--primary));
-    color: hsl(var(--background));
-    box-shadow: var(--shadow-glow-hover);
-    transform: translateY(-2px) scale(1.02);
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 15px hsl(var(--primary) / 0.3);
-    }
-    50% {
-      box-shadow: 0 0 25px hsl(var(--primary) / 0.5), 0 0 35px hsl(var(--primary) / 0.2);
-    }
-  }
-  
-  .service-card {
-    background: rgba(13, 17, 23, 0.55);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius);
-    padding: 2rem;
-    transition: var(--transition-smooth);
-  }
-  
-  .service-card:hover {
-    background: rgba(13, 17, 23, 0.72);
-    border-color: hsl(var(--primary) / 0.3);
-    transform: translateY(-4px);
-    box-shadow: 0 10px 40px hsl(var(--primary) / 0.1);
-  }
+}
+
+.scroll-reveal {
+  animation: reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.scroll-reveal-delay-1 {
+  animation-delay: 0.1s;
+}
+
+.scroll-reveal-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.scroll-reveal-delay-3 {
+  animation-delay: 0.3s;
 }

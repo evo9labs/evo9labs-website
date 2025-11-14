@@ -1,199 +1,163 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Metadata } from "next";
-import {
-  Code,
-  Smartphone,
-  Palette,
-  ShoppingCart,
-  Cloud,
-  Settings,
-  Brush,
-  TrendingUp,
-  Wrench,
-  CheckCircle,
-  ArrowRight,
-} from "lucide-react";
-import { services } from "@/constant";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Services - Evo9 Labs | Digital Evolution Services",
-  description:
-    "Comprehensive digital services including web development, mobile apps, UI/UX design, e-commerce solutions, and cloud services.",
+import { evolution_steps, services } from "@/constant";
+import ServiceCard from "@/components/ServiceCard";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/components/ui/button"; // adjust if you have a custom Button
+
+const cardVariants: any = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: (i % 3) * 0.15, // Stagger inside the row (3 columns per row)
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
 };
 
 export default function Services() {
-  const processSteps = [
-    {
-      number: "01",
-      title: "Discovery & Strategy",
-      description:
-        "We analyze your business needs, target audience, and goals to create a comprehensive digital strategy.",
-      deliverables: [
-        "Project Roadmap",
-        "Technical Specifications",
-        "Timeline & Budget",
-        "Risk Assessment",
-      ],
-    },
-    {
-      number: "02",
-      title: "Design & Prototyping",
-      description:
-        "Creating wireframes, mockups, and interactive prototypes to visualize the final product before development.",
-      deliverables: [
-        "Wireframes",
-        "UI/UX Design",
-        "Interactive Prototype",
-        "Design System",
-      ],
-    },
-    {
-      number: "03",
-      title: "Development & Testing",
-      description:
-        "Building your solution using best practices, with continuous testing to ensure quality and performance.",
-      deliverables: [
-        "Clean Code",
-        "Quality Assurance",
-        "Performance Testing",
-        "Security Audit",
-      ],
-    },
-    {
-      number: "04",
-      title: "Deployment & Support",
-      description:
-        "Launching your solution and providing ongoing support to ensure optimal performance and user satisfaction.",
-      deliverables: [
-        "Live Deployment",
-        "User Training",
-        "Documentation",
-        "Ongoing Support",
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <div className="pt-20">
+        <section
+          id="services"
+          className="py-20 md:py-22 relative overflow-hidden"
+        >
+          <div className="container px-4">
+            {/* Section Title */}
+            <div className="text-center space-y-4 mb-16">
+              <h2 className="text-4xl md:text-6xl font-bold">
+                Our <span className="gradient-text">Services</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Complete digital solutions across nine core dimensions to evolve
+                your business
+              </p>
+            </div>
 
-      {/* Hero Section */}
-      <section className="pt-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            <span className="text-gradient">Our 9 Dimensions of</span>
-            <br />
-            <span className="text-foreground">Digital Evolution</span>
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
-            Comprehensive digital solutions designed to transform your business
-            across all 9 dimensions of modern technology.
-          </p>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-5 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div key={index} className="service-card group">
-                <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
-                </div>
-                <h3 className="text-2xl font-semibold mb-4 text-foreground">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  {service.description}
-                </p>
-                <ul className="space-y-2">
-                  {service.features.map((feature, idx) => (
-                    <li
-                      key={idx}
-                      className="flex items-center text-sm text-muted-foreground"
-                    >
-                      <CheckCircle className="w-4 h-4 text-primary mr-2 flex-shrink-0" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            {/* Services Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  custom={index}
+                  variants={cardVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="flex"
+                >
+                  <ServiceCard service={service} isServicePage={true} />
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Process Section */}
-      <section className="py-20 px-6 bg-card/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Our Evolution <span className="text-gradient">Process</span>
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          {/* Evolution Process Section */}
+          <div className="mt-32 relative z-10">
+            <motion.h2
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-4xl md:text-6xl font-bold text-center mb-4"
+            >
+              Our{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Evolution
+              </span>{" "}
+              Process
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-slate-400 text-lg md:text-xl max-w-3xl mx-auto text-center mb-16"
+            >
               A proven methodology that ensures successful digital
               transformation from concept to deployment.
-            </p>
-          </div>
+            </motion.p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {processSteps.map((step, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <span className="text-2xl font-bold text-primary">
+            {/* Process Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-7xl mx-auto">
+              {evolution_steps.map((step, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 60 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: i * 0.2 }}
+                  className="relative bg-slate-900/60 border border-slate-800 rounded-2xl p-8 
+                   backdrop-blur-sm transition-all duration-500 hover:scale-[1.03]
+                   hover:border-blue-500/40 hover:shadow-[0_0_50px_rgba(59,130,246,0.3)]"
+                >
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 text-white flex items-center justify-center text-lg font-bold shadow-lg">
                     {step.number}
-                  </span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {step.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">{step.description}</p>
-                <div className="text-center">
-                  <h4 className="text-sm font-semibold text-foreground mb-2">
-                    Deliverables:
-                  </h4>
-                  <ul className="space-y-1 text-center">
-                    {step.deliverables.map((deliverable, idx) => (
-                      <li
-                        key={idx}
-                        className="text-sm text-muted-foreground flex items-center justify-center"
-                      >
-                        <ArrowRight className="w-3 h-3 text-primary mr-2" />
-                        {deliverable}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
+                  </div>
+
+                  <h3 className="text-xl font-semibold text-white mt-8 mb-3 text-center">
+                    {step.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-6">
+                    {step.description}
+                  </p>
+
+                  <div>
+                    <h4 className="font-semibold text-white mb-2 text-sm">
+                      Deliverables:
+                    </h4>
+                    <ul className="space-y-1 text-slate-400 text-sm text-left inline-block">
+                      {step.deliverables.map((d, idx) => (
+                        <li
+                          key={idx}
+                          className="flex items-center gap-2 transition-colors duration-300 hover:text-blue-400"
+                        >
+                          <span className="text-blue-400">↠</span> {d}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
-            Ready to Start Your{" "}
-            <span className="text-gradient">Digital Evolution</span>?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Let's discuss your project and create a customized solution that
-            drives your business forward.
-          </p>
-          <Link href="/contact">
-            <Button className="btn-evolution text-lg px-8 py-4">
-              Let's Evolve Together
-            </Button>
-          </Link>
-        </div>
-      </section>
+          {/* Call-to-Action Section */}
+          <motion.section
+            className="pt-40 pb-20 px-6"
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }} // <- important
+            transition={{ duration: 0.6 }}
+          >
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
+                Ready to Start Your
+                <span className="text-gradient">Digital Evolution</span>?
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                Let's discuss your project and create a customized solution that
+                drives your business forward.
+              </p>
+              <Link href="/contact">
+                <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all">
+                  Let's Evolve Together
+                </Button>
+              </Link>
+            </div>
+          </motion.section>
 
-      <Footer />
+          {/* Ambient Lights */}
+          <div className="ambient-light top-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary to-transparent"></div>
+          <div className="ambient-light bottom-1/3 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-secondary to-transparent"></div>
+          <div className="ambient-light top-2/3 right-1/3 w-[400px] h-[400px] bg-gradient-to-br from-primary/50 to-secondary/50"></div>
+        </section>
+      </div>
     </div>
   );
 }

@@ -1,16 +1,13 @@
 "use client";
 
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { Mail, Phone, MapPin, Clock, CheckCircle, Loader2 } from "lucide-react";
+import { Mail, Phone, Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-export default function Contact() {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,158 +55,87 @@ export default function Contact() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    console.log("e vale", e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6 text-primary" />,
-      title: "Email",
-      value: "info@evo9labs.com",
-      description: "Send us an email anytime",
-    },
-    // {
-    //   icon: <Phone className="w-6 h-6 text-primary" />,
-    //   title: "Phone",
-    //   value: "+1 (555) 123-4567",
-    //   description: "Mon-Fri from 8am to 6pm",
-    // },
-    // {
-    //   icon: <MapPin className="w-6 h-6 text-primary" />,
-    //   title: "Location",
-    //   value: "Innovation District",
-    //   description: "Digital evolution headquarters",
-    // },
-    {
-      icon: <Clock className="w-6 h-6 text-primary" />,
-      title: "Hours",
-      value: "Mon-Fri 8AM-6PM",
-      description: "We'll get back to you within 24 hours",
-    },
-  ];
-
-  const services = [
-    "Web Development",
-    "Mobile App Development",
-    "Blockchain Services",
-    "E-commerce Solutions",
-    "Cloud Services",
-    "Custom Software",
-    "Branding & Identity",
-    "Digital Marketing",
-    "Maintenance & Support",
-  ];
-
-  const faqs = [
-    {
-      question: "How long does a typical project take?",
-      answer:
-        "Project timelines vary based on complexity, but most web projects take 4-8 weeks, while mobile apps typically require 8-16 weeks.",
-    },
-    {
-      question: "Do you provide ongoing support?",
-      answer:
-        "Yes, we offer comprehensive maintenance and support packages to keep your digital solutions running smoothly and securely.",
-    },
-    {
-      question: "What's your development process?",
-      answer:
-        "We follow a proven 4-step process: Discovery & Strategy, Design & Prototyping, Development & Testing, and Deployment & Support.",
-    },
-    {
-      question: "Can you work with our existing team?",
-      answer:
-        "Absolutely! We excel at collaborative partnerships and can integrate seamlessly with your existing development team or stakeholders.",
-    },
-  ];
-
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <section id="contact" className="py-20 md:py-32 relative overflow-hidden">
+      <div className="container px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center space-y-4 mb-16 scroll-reveal">
+            <h2 className="text-4xl md:text-6xl font-bold">
+              Let's <span className="gradient-text">Connect</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Ready to start your digital evolution? Get in touch with us today.
+            </p>
+          </div>
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            <span className="text-gradient">Let's Start</span>
-            <br />
-            <span className="text-foreground">Your Evolution</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
-            Ready to transform your digital presence? Get in touch and let's
-            discuss how we can help you evolve across all 9 dimensions of
-            digital success.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Form & Info */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-bold mb-8 text-foreground">
-                Send us a message
-              </h2>
+            <div className="space-y-6 scroll-reveal scroll-reveal-delay-1">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <Label htmlFor="name">Full Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      type="text"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="mt-1"
-                    />
-                  </div>
-                </div>
                 <div>
-                  <Label htmlFor="company">Company (Optional)</Label>
+                  <Input
+                    required
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your Name *"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="bg-card/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+
+                <div>
+                  <Input
+                    required
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email Address *"
+                    className="bg-card/50 border-border/50 focus:border-primary"
+                  />
+                </div>
+
+                <div>
                   <Input
                     id="company"
                     name="company"
                     type="text"
                     value={formData.company}
                     onChange={handleChange}
-                    className="mt-1"
+                    placeholder="Company Name (Optional)"
+                    className="bg-card/50 border-border/50 focus:border-primary"
                   />
                 </div>
+
                 <div>
-                  <Label htmlFor="message">Project Details</Label>
                   <Textarea
+                    rows={6}
+                    required
                     id="message"
                     name="message"
+                    placeholder="Tell us about your project *"
                     value={formData.message}
                     onChange={handleChange}
-                    required
-                    rows={6}
-                    className="mt-1"
-                    placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
+                    className="bg-card/50 border-border/50 focus:border-primary min-h-[150px]"
                   />
                 </div>
+
                 <Button
                   type="submit"
-                  className="btn-evolution w-full md:w-auto flex items-center justify-center"
+                  size="lg"
                   disabled={isLoading}
+                  className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-all"
                 >
                   {isLoading ? (
                     <>
@@ -219,80 +145,66 @@ export default function Contact() {
                   ) : (
                     "Send Message"
                   )}
+                  <Send className="ml-2 h-5 w-5" />
                 </Button>
               </form>
             </div>
 
-            {/* Contact Info & Services */}
-            <div className="space-y-12">
-              {/* Contact Information */}
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-foreground">
-                  Get in touch
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {contactInfo.map((info, index) => (
-                    <div key={index} className="flex items-start space-x-4">
-                      {info.icon}
-                      <div>
-                        <div className="font-semibold text-foreground">
-                          {info.title}
-                        </div>
-                        <div className="text-primary">{info.value}</div>
-                        <div className="text-sm text-muted-foreground">
-                          {info.description}
-                        </div>
-                      </div>
+            {/* Contact Info */}
+            <div className="space-y-8 scroll-reveal scroll-reveal-delay-2">
+              {/* Info Cards */}
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 p-6 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary p-[1px] flex-shrink-0">
+                    <div className="w-full h-full bg-card rounded-lg flex items-center justify-center">
+                      <Mail className="h-5 w-5 text-primary" />
                     </div>
-                  ))}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Email Us</h3>
+                    <p className="text-muted-foreground">info@evo9labs.com</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-6 rounded-xl bg-card/50 border border-border/50 hover:border-primary/30 transition-all">
+                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary p-[1px] flex-shrink-0">
+                    <div className="w-full h-full bg-card rounded-lg flex items-center justify-center">
+                      <Phone className="h-5 w-5 text-primary" />
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Call Us</h3>
+                    <p className="text-muted-foreground">+1 (555) 123-4567</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Services Checklist */}
-              <div>
-                <h3 className="text-2xl font-bold mb-6 text-foreground">
-                  What we can help with
+              {/* CTA */}
+              <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20">
+                <h3 className="text-2xl font-bold mb-3 gradient-text">
+                  Ready to Evolve?
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {services.map((service, index) => (
-                    <div key={index} className="flex items-center space-x-3">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">{service}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-muted-foreground mb-4">
+                  Join hundreds of successful businesses that have transformed
+                  their digital presence with Evo9Labs.
+                </p>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* FAQ Section */}
-      <section className="py-20 px-6 bg-card/50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Frequently Asked <span className="text-gradient">Questions</span>
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Quick answers to common questions about our services and process.
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {faqs.map((faq, index) => (
-              <div key={index} className="service-card">
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {faq.question}
-                </h3>
-                <p className="text-muted-foreground">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
+      {/* Ambient Light Effects */}
+      <div
+        className="ambient-light top-1/3 left-1/4 w-[500px] h-[500px] bg-gradient-to-br from-secondary to-transparent"
+        style={{ animationDelay: "2s" }}
+      ></div>
+      <div
+        className="ambient-light bottom-1/4 right-1/4 w-[550px] h-[550px] bg-gradient-to-br from-primary to-transparent"
+        style={{ animationDelay: "5s" }}
+      ></div>
+    </section>
   );
-}
+};
+
+export default Contact;

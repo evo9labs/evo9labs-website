@@ -1,134 +1,122 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import {
-  Code,
-  Smartphone,
-  Palette,
-  Globe,
-  Shield,
-  Zap,
-  Database,
-  Users,
-  TrendingUp,
-  ArrowRight,
-} from "lucide-react";
+"use client";
+
+import Hero from "@/components/Hero";
+import ProjectCard from "@/components/ProjectCard";
+import ServiceCard from "@/components/ServiceCard";
 import { projects, services } from "@/constant";
-import ProjectCard from "@/components/PortfolioCard";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+
+const cardVariants: any = {
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: (i % 3) * 0.15, // Stagger inside the row (3 columns per row)
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
 
 export default function Home() {
+  const featuredProjects = projects.filter((p) => p.isFeatured);
+
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
+      <Hero />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero-bg.jpg"
-            alt="Digital Evolution Background"
-            fill
-            className="object-cover opacity-20"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/60 to-background/80" />
-        </div>
+      {/* Section Section */}
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
-            <span className="text-gradient">The 9 Dimensions of</span>
-            <br />
-            <span className="text-foreground">Digital Evolution</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in">
-            We evolve your business digitally with complete end-to-end solutions
-            across every essential pillar of modern technology.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in">
-            <Link href="/contact">
-              <Button className="btn-evolution text-lg px-8 py-4">
-                Start Your Evolution
-              </Button>
-            </Link>
-            <Link href="/services">
-              <Button
-                variant="outline"
-                className="text-lg px-8 py-4 border-primary/30 hover:border-primary/60"
-              >
-                Explore Services
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Our Digital{" "}
-              <span className="text-gradient">Evolution Services</span>
+      <section
+        id="services"
+        className="py-20 md:py-22 relative overflow-hidden"
+      >
+        <div className="container px-4">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold">
+              Our <span className="gradient-text">Services</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From concept to deployment, we provide comprehensive solutions
-              across all aspects of digital transformation.
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Complete digital solutions across nine core dimensions to evolve
+              your business
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, index) => (
-              <div key={index} className="service-card group">
-                <div className="flex items-center justify-center w-16 h-16 bg-primary/10 rounded-xl mb-6 group-hover:bg-primary/20 transition-colors">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground">
-                  {service.short_description}
-                </p>
-              </div>
+              <motion.div
+                key={index}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.3 }}
+                className="flex"
+              >
+                <ServiceCard service={service} />
+              </motion.div>
             ))}
           </div>
         </div>
+
+        <div className="ambient-light top-1/4 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-primary to-transparent"></div>
+        <div className="ambient-light bottom-1/3 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-secondary to-transparent"></div>
+        <div className="ambient-light top-2/3 right-1/3 w-[400px] h-[400px] bg-gradient-to-br from-primary/50 to-secondary/50"></div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="py-20 px-6 bg-card/50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-              Featured <span className="text-gradient">Projects</span>
+      {/* Projects Section */}
+      <section className="py-20 md:py-32 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold text-white">
+              Featured{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Projects
+              </span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Showcase of our recent work and successful digital
-              transformations.
+            <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+              Discover how we've helped businesses evolve and achieve remarkable
+              results.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects
-              .filter((p) => p.isFeatured)
-              .map((project, i) => (
-                <ProjectCard key={i} project={project} isHomePage={true} />
-              ))}
+          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProjects.map((project, index: any) => (
+              <motion.div
+                key={index}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.25 }}
+                variants={cardVariants}
+                custom={index}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
           </div>
 
-          <div className="text-center mt-12">
+          {/* View All Button */}
+          <div className="text-center mt-14">
             <Link href="/portfolio">
-              <Button className="btn-evolution">
+              <button
+                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg
+              transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]
+              flex items-center gap-2 mx-auto group"
+              >
                 View All Projects
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </button>
             </Link>
           </div>
         </div>
-      </section>
 
-      <Footer />
+        <div className="absolute top-1/3 left-1/4 w-[550px] h-[550px] bg-gradient-to-br from-blue-500 to-transparent rounded-full blur-[140px] opacity-20 pointer-events-none" />
+        <div className="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-gradient-to-br from-purple-500 to-transparent rounded-full blur-[120px] opacity-20 pointer-events-none" />
+      </section>
     </div>
   );
 }
