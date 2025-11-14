@@ -1,48 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-} from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Mail, Github, Linkedin, Instagram } from "lucide-react";
 import Image from "next/image";
+import { nav_items } from "@/constant";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname(); // get current route
 
-  //test
+  const isActive = (path: string) => {
+    if (path === "/") return pathname === "/";
+    return pathname.startsWith(path);
+  };
+
+  const blog_path = { name: "Blogs", path: "/blogs" };
+  const NavItems = [...nav_items, blog_path];
+
   return (
     <footer className="panel-glass-alt border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            {/* <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center font-bold text-background">
-                E9
-              </div>
-              <div>
-                <div className="text-lg font-bold text-foreground">
-                  Evo9 Labs
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  The 9 Dimensions of Digital Evolution
-                </div>
-              </div>
-            </div> */}
             <Link href="/" className="flex items-center space-x-3 pb-6">
-              {/* Logo image */}
               <Image
                 priority
                 draggable={false}
-                src="/logo.webp" // path from public folder
+                src="/logo.webp"
                 alt="Evo9 Labs Logo"
-                width={180} // adjust size as needed
+                width={180}
                 height={59}
               />
             </Link>
@@ -56,37 +44,26 @@ const Footer = () => {
           <div>
             <h3 className="text-foreground font-semibold mb-4">Quick Links</h3>
             <div className="space-y-2">
-              <Link
-                href="/services"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Services
-              </Link>
-              <Link
-                href="/portfolio"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Portfolio
-              </Link>
-              <Link
-                href="/about"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/contact"
-                className="block text-muted-foreground hover:text-primary transition-colors"
-              >
-                Contact
-              </Link>
+              {NavItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  className={`block transition-colors ${
+                    isActive(item.path)
+                      ? "text-primary font-bold"
+                      : "text-muted-foreground hover:text-primary"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
             </div>
           </div>
 
           {/* Contact Info */}
           <div>
             <h3 className="text-foreground font-semibold mb-4">Contact</h3>
-            <div className="space-y-3">
+            <div className="space-y-6">
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Mail className="w-4 h-4" />
                 <span>info@evo9labs.com</span>

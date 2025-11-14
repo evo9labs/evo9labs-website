@@ -59,7 +59,7 @@ export default function Services() {
           </div>
 
           {/* Evolution Process Section */}
-          <div className="mt-32 relative z-10">
+          <div className="container px-4 mt-32 relative z-10">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}

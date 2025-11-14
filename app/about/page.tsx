@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { services, values } from "@/constant";
-import { Target, Eye, Lightbulb } from "lucide-react";
+import { our_purpose, our_values, services } from "@/constant";
 import { motion } from "framer-motion";
 
 export default function About() {
@@ -24,6 +23,10 @@ export default function About() {
     },
   };
 
+  // Hover classes for cards
+  const hoverCardClasses =
+    "group relative p-8 rounded-2xl bg-card/50 backdrop-blur-sm border border-border/30 hover:border-primary/50 hover:shadow-[0_0_60px_rgba(14,165,233,0.2),0_0_100px_rgba(168,85,247,0.2)] hover:scale-[1.02] transition-all duration-500 overflow-hidden";
+
   return (
     <div className="relative py-24">
       {/* HEADER */}
@@ -43,97 +46,44 @@ export default function About() {
         </p>
       </motion.div>
 
-      {/* CARDS GRID */}
+      {/* MISSION / VISION / PHILOSOPHY */}
       <div className="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto px-6">
-        {/* MISSION */}
-        <motion.div
-          custom={0}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="group p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 hover:border-primary/40 transition"
-        >
+        {our_purpose.map((item, i) => (
           <motion.div
-            variants={floatSoft}
-            initial="initial"
-            animate="animate"
-            className="w-14 h-14 bg-gradient-to-br from-primary to-secondary p-[1px] rounded-xl mb-6"
+            key={i}
+            custom={i}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUp}
+            className={`${hoverCardClasses} bg-gradient-to-br ${item.color}`}
           >
-            <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
-              <Target className="h-7 w-7 text-primary" />
-            </div>
+            <motion.div
+              variants={floatSoft}
+              initial="initial"
+              animate="animate"
+              className="w-14 h-14 bg-gradient-to-br from-primary to-secondary p-[1px] rounded-xl mb-6"
+            >
+              <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
+                <item.icon
+                  className={`h-7 w-7 ${
+                    item.title === "Our Vision"
+                      ? "text-secondary"
+                      : "text-primary"
+                  }`}
+                />
+              </div>
+            </motion.div>
+
+            <h3 className="text-2xl font-bold mb-3 group-hover:gradient-text transition">
+              {item.title}
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
           </motion.div>
-
-          <h3 className="text-2xl font-bold mb-3 group-hover:gradient-text transition">
-            Our Mission
-          </h3>
-          <p className="text-muted-foreground leading-relaxed">
-            To empower businesses with modern, scalable, and meaningful digital
-            solutions.
-          </p>
-        </motion.div>
-
-        {/* VISION */}
-        <motion.div
-          custom={1}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="group p-8 rounded-2xl bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 hover:border-secondary/40 transition"
-        >
-          <motion.div
-            variants={floatSoft}
-            initial="initial"
-            animate="animate"
-            className="w-14 h-14 bg-gradient-to-br from-primary to-secondary p-[1px] rounded-xl mb-6"
-          >
-            <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
-              <Eye className="h-7 w-7 text-secondary" />
-            </div>
-          </motion.div>
-
-          <h3 className="text-2xl font-bold mb-3 group-hover:gradient-text transition">
-            Our Vision
-          </h3>
-          <p className="text-muted-foreground leading-relaxed">
-            To be a global innovation leader in digital transformation and
-            intelligent systems.
-          </p>
-        </motion.div>
-
-        {/* PHILOSOPHY */}
-        <motion.div
-          custom={2}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          className="group p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 hover:border-primary/40 transition"
-        >
-          <motion.div
-            variants={floatSoft}
-            initial="initial"
-            animate="animate"
-            className="w-14 h-14 bg-gradient-to-br from-primary to-secondary p-[1px] rounded-xl mb-6"
-          >
-            <div className="w-full h-full bg-background rounded-xl flex items-center justify-center">
-              <Lightbulb className="h-7 w-7 text-primary" />
-            </div>
-          </motion.div>
-
-          <h3 className="text-2xl font-bold mb-3 group-hover:gradient-text transition">
-            Our Philosophy
-          </h3>
-          <p className="text-muted-foreground leading-relaxed">
-            We merge strategy + creativity + technology to build digital
-            experiences that truly evolve.
-          </p>
-        </motion.div>
+        ))}
       </div>
 
-      {/* ============ EVO / 9 / LABS MEANING SECTION ============ */}
+      {/* EVO / 9 / LABS MEANING */}
       <section className="py-28 px-6">
         <motion.div
           initial="hidden"
@@ -151,7 +101,6 @@ export default function About() {
           </p>
         </motion.div>
 
-        {/* PANEL */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -168,7 +117,7 @@ export default function About() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
-                className="text-center"
+                className={`${hoverCardClasses} text-center`}
               >
                 <motion.div
                   variants={floatSoft}
@@ -201,10 +150,9 @@ export default function About() {
         </motion.div>
       </section>
 
-      {/* ============ WHY EVO9 LABS SECTION ============ */}
+      {/* WHY EVO9 LABS */}
       <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* TEXT */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -230,20 +178,13 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* SERVICES GRID */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="grid grid-cols-3 gap-4"
-          >
+          <motion.div className="grid grid-cols-3 gap-4">
             {services.map((service, idx) => (
               <motion.div
                 key={idx}
                 custom={idx}
                 variants={fadeUp}
-                className="aspect-square bg-primary/10 rounded-lg flex flex-col items-center justify-center text-center p-3 group hover:bg-primary/20 transition-colors"
+                className={`${hoverCardClasses} aspect-square flex flex-col items-center justify-center text-center`}
               >
                 <div className="mb-2 group-hover:scale-110 transition-transform">
                   <service.icon className="h-6 w-6 text-primary" />
@@ -257,10 +198,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* ============ CORE VALUES SECTION ============ */}
+      {/* CORE VALUES */}
       <section className="py-20 px-6 bg-card/50">
         <div className="max-w-7xl mx-auto">
-          {/* HEADER */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -277,9 +217,8 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* GRID LAYOUT */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {values.map((value, i) => (
+            {our_values.map((value, i) => (
               <motion.div
                 key={i}
                 custom={i}
@@ -287,7 +226,7 @@ export default function About() {
                 whileInView="visible"
                 viewport={{ once: true }}
                 variants={fadeUp}
-                className="card text-center group"
+                className={`${hoverCardClasses} text-center`}
               >
                 <div className="mb-6 group-hover:scale-110 transition-transform duration-300">
                   {value.icon}
@@ -302,7 +241,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ============ CTA SECTION ============ */}
+      {/* CTA */}
       <section className="py-20 px-6">
         <motion.div
           initial="hidden"
@@ -314,12 +253,10 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">
             Ready to Evolve <span className="gradient-text">Together</span>?
           </h2>
-
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Let's discuss how we can help transform your business across all 9
             dimensions of the digital evolution framework.
           </p>
-
           <Link href="/contact">
             <Button className="btn-evolution text-lg px-8 py-4">
               Start the Conversation
