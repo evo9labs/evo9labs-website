@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { blog_posts } from "@/constant";
 
+// Generate static params for dynamic route
 export async function generateStaticParams() {
   return blog_posts.map((post) => ({
     id: post.id.toString(),
@@ -19,11 +20,14 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{
+    id: string;
+  }>;
 }
 
-const BlogPostPage = ({ params }: PageProps) => {
-  const id = Number(params.id);
+const BlogPostPage = async ({ params }: PageProps) => {
+  const { id: idParam } = await params;
+  const id = Number(idParam);
   const post = blog_posts.find((p) => p.id === id);
 
   if (!post) {
