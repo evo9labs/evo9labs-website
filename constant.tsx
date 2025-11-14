@@ -403,7 +403,7 @@ export const blog_posts = [
     date: "2024-03-10",
     readTime: "8 min read",
     category: "Blockchain",
-    image: "blog-blockchain.jpg",
+    image: "/blogs/blog-blockchain.jpg",
     author: {
       name: "Michael Torres",
       role: "Blockchain Architect",

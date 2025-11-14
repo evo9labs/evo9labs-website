@@ -32,7 +32,7 @@ const BlogPostPage = async ({ params }: PageProps) => {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background overflow-x-hidden">
         <Navbar />
         <div className="container mx-auto px-4 py-32 text-center">
           <h1 className="text-4xl font-bold mb-4">Blog Post Not Found</h1>
@@ -51,14 +51,14 @@ const BlogPostPage = async ({ params }: PageProps) => {
   const relatedPosts = blog_posts.filter((p) => p.id !== post.id).slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden w-full">
       {/* Hero Section */}
-      <article className="relative pt-32 pb-20">
+      <article className="relative pt-32 pb-20 overflow-x-hidden w-full">
         {/* Ambient lights */}
-        <div className="ambient-light w-[600px] h-[600px] bg-primary/30 top-0 right-0" />
-        <div className="ambient-light w-[500px] h-[500px] bg-secondary/30 top-20 left-0" />
+        <div className="ambient-light w-[600px] h-[600px] bg-primary/30 top-0 -right-[100px] pointer-events-none" />
+        <div className="ambient-light w-[500px] h-[500px] bg-secondary/30 top-20 -left-[100px] pointer-events-none" />
 
-        <div className="container mx-auto px-4 max-w-4xl">
+        <div className="container mx-auto px-4 max-w-4xl w-full">
           {/* Back button */}
           <Link
             href="/blogs"
@@ -76,15 +76,15 @@ const BlogPostPage = async ({ params }: PageProps) => {
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 scroll-reveal">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 scroll-reveal break-words">
             <span className="gradient-text">{post.title}</span>
           </h1>
 
           {/* Meta info */}
           <div className="flex flex-wrap items-center gap-6 mb-12 text-muted-foreground scroll-reveal">
             <div className="flex items-center gap-2">
-              <Calendar className="w-5 h-5" />
-              <span>
+              <Calendar className="w-5 h-5 flex-shrink-0" />
+              <span className="break-words">
                 {new Date(post.date).toLocaleDateString("en-US", {
                   month: "long",
                   day: "numeric",
@@ -93,7 +93,7 @@ const BlogPostPage = async ({ params }: PageProps) => {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="w-5 h-5" />
+              <Clock className="w-5 h-5 flex-shrink-0" />
               <span>{post.readTime}</span>
             </div>
             <Button variant="ghost" size="sm" className="ml-auto">
@@ -104,12 +104,14 @@ const BlogPostPage = async ({ params }: PageProps) => {
 
           {/* Author info */}
           <div className="flex items-center gap-4 p-6 bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg mb-12 scroll-reveal">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold">
+            <div className="w-12 h-12 flex-shrink-0 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-primary-foreground font-bold">
               {post.author.avatar}
             </div>
-            <div>
-              <div className="font-semibold">{post.author.name}</div>
-              <div className="text-sm text-muted-foreground">
+            <div className="min-w-0">
+              <div className="font-semibold break-words">
+                {post.author.name}
+              </div>
+              <div className="text-sm text-muted-foreground break-words">
                 {post.author.role}
               </div>
             </div>
@@ -117,16 +119,20 @@ const BlogPostPage = async ({ params }: PageProps) => {
 
           {/* Content */}
           <div
-            className="prose prose-lg prose-invert max-w-none scroll-reveal
-              prose-headings:gradient-text prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6
+            className="prose prose-lg prose-invert max-w-none scroll-reveal w-full
+              prose-headings:gradient-text prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6 prose-headings:break-words
               prose-h2:text-3xl prose-h3:text-2xl
-              prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6
-              prose-ul:text-muted-foreground prose-ul:mb-6 prose-li:mb-2
-              prose-strong:text-foreground prose-strong:font-semibold
+              prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-6 prose-p:break-words
+              prose-ul:text-muted-foreground prose-ul:mb-6 prose-li:mb-2 prose-li:break-words
+              prose-strong:text-foreground prose-strong:font-semibold prose-strong:break-words
               prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:pl-6 
               prose-blockquote:italic prose-blockquote:text-foreground prose-blockquote:bg-card/30 
               prose-blockquote:backdrop-blur-sm prose-blockquote:py-4 prose-blockquote:rounded-r-lg
-              prose-blockquote:my-8"
+              prose-blockquote:my-8 prose-blockquote:break-words
+              prose-pre:max-w-full prose-pre:overflow-x-auto 
+              prose-code:break-words
+              prose-img:max-w-full prose-img:h-auto
+              [&>*]:max-w-full"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
         </div>
@@ -134,64 +140,77 @@ const BlogPostPage = async ({ params }: PageProps) => {
 
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <section className="py-20 relative border-t border-border/50">
+        <section className="py-20 border-t border-border/50 overflow-x-hidden w-full">
           {/* Ambient lights */}
-          <div className="ambient-light w-[400px] h-[400px] bg-primary/20 bottom-0 left-1/4" />
+          <div className="ambient-light w-[400px] h-[400px] bg-primary/20 bottom-0 left-1/4 pointer-events-none" />
 
-          <div className="container mx-auto px-4 max-w-6xl">
+          <div className="container mx-auto px-4 max-w-6xl w-full">
             <h2 className="text-3xl font-bold mb-12 text-center scroll-reveal">
               <span className="gradient-text">Related Articles</span>
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
               {relatedPosts.map((relatedPost, index) => (
-                <Link
+                <div
                   key={relatedPost.id}
-                  href={`/blogs/${relatedPost.id}`}
-                  className="group scroll-reveal"
+                  className="scroll-reveal w-full"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <Card className="h-full relative pt-0 overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_50px_rgba(14,165,233,0.3)] hover:scale-[1.02] hover:-translate-y-1">
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-primary/20 rounded-full filter blur-[80px]" />
-                    </div>
-
-                    <div className="relative h-32 bg-gradient-to-br from-primary/20 to-secondary/20">
-                      <div className="absolute bottom-3 left-4">
-                        <span className="px-3 py-1 text-xs font-semibold bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full">
-                          {relatedPost.category}
-                        </span>
+                  <Link
+                    href={`/blogs/${relatedPost.id}`}
+                    className="group block w-full"
+                  >
+                    <Card className="h-full relative pt-0 overflow-hidden border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-500 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(14,165,233,0.2)] hover:-translate-y-1 w-full">
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-primary/20 rounded-full filter blur-[80px]" />
                       </div>
-                    </div>
 
-                    <CardHeader>
-                      <CardTitle className="text-lg group-hover:text-primary transition-colors duration-300">
-                        {relatedPost.title}
-                      </CardTitle>
-                      <CardDescription className="text-sm line-clamp-2">
-                        {relatedPost.excerpt}
-                      </CardDescription>
-                    </CardHeader>
-
-                    <CardContent>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          <span>
-                            {new Date(relatedPost.date).toLocaleDateString(
-                              "en-US",
-                              { month: "short", day: "numeric" }
-                            )}
+                      <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 w-full overflow-hidden">
+                        {relatedPost.image ? (
+                          <img
+                            src={relatedPost.image}
+                            alt={relatedPost.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20" />
+                        )}
+                        <div className="absolute bottom-3 left-4 z-10">
+                          <span className="px-3 py-1 text-xs font-semibold bg-primary/20 backdrop-blur-sm border border-primary/30 rounded-full">
+                            {relatedPost.category}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          <span>{relatedPost.readTime}</span>
-                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </Link>
+
+                      <CardHeader>
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors duration-300 break-words">
+                          {relatedPost.title}
+                        </CardTitle>
+                        <CardDescription className="text-sm line-clamp-2 break-words">
+                          {relatedPost.excerpt}
+                        </CardDescription>
+                      </CardHeader>
+
+                      <CardContent>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3 flex-shrink-0" />
+                            <span>
+                              {new Date(relatedPost.date).toLocaleDateString(
+                                "en-US",
+                                { month: "short", day: "numeric" }
+                              )}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-3 h-3 flex-shrink-0" />
+                            <span>{relatedPost.readTime}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>

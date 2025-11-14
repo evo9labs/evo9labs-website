@@ -49,7 +49,10 @@ const Blogs = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center scroll-reveal">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              <span className="gradient-text">Insights & Innovation</span>
+              Insights{" "}
+              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                & Innovation
+              </span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8">
               Explore the latest trends, insights, and best practices in digital
